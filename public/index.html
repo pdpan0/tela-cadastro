@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tela Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+</head>
+<body style="background-color: #34495e">
+    <div class="container">
+        <form id="form_login" onsubmit="return entrar()" method="POST">
+            <h1>Login</h1>
+
+            <div class="nes-field">
+              <!-- <label for="name_field">Your name</label> -->
+              <input type="text" id="d" class="nes-input" placeholder="Login" name="login" required>
+            </div>
+
+            <!-- <div class="nes-field">
+                 <label for="name_field">Your name</label> 
+                <input type="text" id="name_field" class="nes-input" placeholder="Nome" name="nome" required>
+              </div>
+
+              <div class="nes-field">
+               <label for="name_field">Your name</label>
+                <input type="text" id="name_field" class="nes-input" placeholder="Sobrenome" name="sobrenome" required>
+              </div> -->
+
+              <div class="nes-field">
+                <!-- <label for="name_field">Your name</label> -->
+                <input type="password" id="name_field" class="nes-input" placeholder="Senha" name="senha" required>
+              </div>
+
+              <!-- <label>
+                <input type="radio" class="nes-radio" name="answer" checked />
+                <span>Homem</span>
+              </label>
+              
+              <label>
+                <input type="radio" class="nes-radio" name="answer" />
+                <span>Mulher</span>
+              </label> -->
+
+            <button type="submit" id="btn_entrar" class="nes-btn is-warning">Logar</button>
+            <button type="button" onclick="cad()">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>
+<script src="script.js"></script>
+<script>
+
+function cad(){window.location='cadastro.html'}
+    function verificarAutenticacao() {
+        if (sessionStorage.usuario_bandtec != undefined) {
+            window.location.href = 'main.html';
+        }
+    }
+
+    function entrar() {
+        aguardar();
+        var formulario = new URLSearchParams(new FormData(form_login));
+        fetch("/usuarios/entrar", {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+            
+            if (response.ok) {
+
+                response.json().then(function (resposta) {
+
+                    sessionStorage.usuario_bandtec = resposta.nome;
+                    verificarAutenticacao();
+
+                });
+            } else {
+
+                console.log('Erro de login!');
+                finalizar_aguardar();
+            }
+        });
+
+        return false;
+    }
+
+    function aguardar() {
+        btn_entrar.disabled = true;
+        // img_aguarde.style.display='block';
+        // div_erro.style.display='none';
+    }
+
+    function finalizar_aguardar() {
+        btn_entrar.disabled = false;
+        // img_aguarde.style.display='none';
+        // div_erro.style.display='block';
+    }
+</script>

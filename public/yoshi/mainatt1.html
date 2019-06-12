@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <span>Olá! Sua pontuação: <b id="score1">0</b></span><br>
+    <span>Maior Pontuação: <b id="record1">0</b></span><br>
+
+    <button type="button" onclick="logoff()">Sair</button>
+    <canvas id="stage" width="600" height="600"></canvas>
+    <script src="script.js"></script>
+
+    Ranking Global:
+    <form id="form_ranking" onsubmit="return enviar()" method="POST">
+    
+    </form>
+</body>
+
+</html>
+<script>
+    var usuario;
+
+    verificarAutenticacao();
+
+    function verificarAutenticacao() {
+        usuario = sessionStorage.usuario_bandtec;
+        if (usuario == undefined) {
+            window.location.href = 'main.html';
+        } else {
+            b_usuario.innerHTML = usuario;
+        }
+    }
+    function verificarAutenticacao2() {
+        usuario = sessionStorage.usuario_bandtec;
+        if (usuario == undefined) {
+            window.location.href = 'index.html';
+        } else {
+            b_usuario.innerHTML = usuario;
+        }
+    }
+
+    function logoff() {
+        sessionStorage.removeItem('usuario_bandtec');
+        verificarAutenticacao2();
+    }
+
+    function enviar(){
+        var enviar_ranking = new URLSearchParams (new FormData (form_ranking));
+        fetch("ranking/enviar",{
+            method: "POST",
+            body: enviar_ranking
+        }).then(function (response) {
+
+            if(response.ok){
+
+                console.log('Mandou informações');
+
+            } else {
+                console.log('Erro de cadastro!');
+                response.text().then(function (resposta) {
+                // div_erro.innerHTML = resposta;
+                });
+            }
+    });
+}
+</script>
