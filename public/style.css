@@ -4,6 +4,13 @@ body{
     /* font-family: sans-serif; */
     background-color: #34495e;
 }
+.bmain{
+    /* display: grid; */
+    overflow: hidden;
+}
+#a1{display:flex;
+    justify-content: space-between;
+    justify-content: space-around;}
 span{margin-left: 180px;}
 .container{
     /* display: flex; */
