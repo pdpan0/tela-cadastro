@@ -45,7 +45,7 @@
               </label> -->
 
             <button type="submit" id="btn_entrar" class="nes-btn is-warning">Logar</button>
-            <button type="button" onclick="cad()">Cadastrar</button>
+            <button type="button" id="btn_entrar" class="nes-btn is-warning"onclick="cad()">Cadastrar</button>
         </form>
     </div>
 </body>
@@ -72,7 +72,7 @@ function cad(){window.location='cadastro.html'}
 
                 response.json().then(function (resposta) {
 
-                    sessionStorage.usuario_bandtec = resposta.nome;
+                    sessionStorage.usuario_bandtec = resposta.loginU;
                     verificarAutenticacao();
 
                 });
